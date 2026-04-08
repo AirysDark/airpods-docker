@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  airpods:
+    image: airpods-image:latest
+    container_name: airpods-debug
+    network_mode: host               # allows direct Bluetooth access
+    privileged: true                 # allows hciconfig, hcitool
+    ports:
+      - "5050:5050"                  # Web UI
+    volumes:
+      - /opt/airpods-docker:/debug  # Mount project folder for persistence / live edits
+    environment:
+      - AP_API=http://localhost:5050
+      - DEBUG=1
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:5050/state || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s

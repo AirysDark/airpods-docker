@@ -1,0 +1,11 @@
+colorama
+flask
+flask-socketio
+eventlet
+drawille
+numpy
+matplotlib
+asciichartpy
+rich
+requests
+bleak

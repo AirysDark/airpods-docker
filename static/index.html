@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AirPods Control</title>
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Socket.IO -->
+  <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+  <!-- External JS -->
+  <script src="app.js" defer></script>
+</head>
+
+<body>
+
+<h2>AirPods Live Control Panel</h2>
+
+<div id="connStatus" class="status disconnected">Disconnected</div>
+
+<button onclick="connect()">Connect</button>
+
+<h3>Noise Control</h3>
+<button onclick="setNoise(1)">Off</button>
+<button onclick="setNoise(2)">ANC</button>
+<button onclick="setNoise(3)">Transparency</button>
+<button onclick="setNoise(4)">Adaptive</button>
+
+<h3>Conversational Awareness</h3>
+<button onclick="setCA(1)">Enable</button>
+<button onclick="setCA(0)">Disable</button>
+
+<h3>Adaptive Level</h3>
+<input type="range" min="0" max="100" id="adaptiveSlider">
+
+<h3>Battery</h3>
+<div id="battery"></div>
+
+<h3>Mode Status</h3>
+<div id="modeStatus"></div>
+
+<h3>Head Tracking (X/Y/Z)</h3>
+<canvas id="headGraph"></canvas>
+
+<h3>Recorder</h3>
+<button onclick="recStart()">Start</button>
+<button onclick="recStop()">Stop</button>
+<button onclick="recReplay()">Replay</button>
+
+<h3>Raw Packet</h3>
+<input id="rawInput" placeholder="HEX packet">
+<button onclick="sendRaw()">Send</button>
+
+<h3>Scan & Pair AirPods</h3>
+<button onclick="scanDevices()">Scan</button>
+<select id="deviceList"></select>
+<button onclick="pairDevice()">Pair & Connect</button>
+
+<h3>State</h3>
+<pre id="status"></pre>
+
+</body>
+</html>
