@@ -1,16 +1,21 @@
 
-sudo rm -f /opt/rootfs_debootstrap/dev/null
-sudo mknod -m 666 /opt/rootfs_debootstrap/dev/null c 1 3
+sudo rm -f /opt/airpods-docker/rootfs_debootstrap/dev/null
+sudo mknod -m 666 /opt/airpods-docker/rootfs_debootstrap/dev/null c 1 3
 
-sudo mkdir -p /opt/rootfs_debootstrap/{proc,sys,dev,run,tmp}
-sudo chmod 1777 /opt/rootfs_debootstrap/tmp
+sudo mkdir -p /opt/airpods-docker/rootfs_debootstrap/{proc,sys,dev,run,tmp}
+sudo chmod 1777 /opt/airpods-docker/rootfs_debootstrap/tmp
 
-sudo mount -t proc /proc /opt/rootfs_debootstrap/proc
-sudo mount --rbind /sys /opt/rootfs_debootstrap/sys
-sudo mount --rbind /dev /opt/rootfs_debootstrap/dev
-sudo mount --rbind /run /opt/rootfs_debootstrap/run
+sudo mkdir -p /opt/airpods-docker/rootfs_debootstrap/dev
+sudo mkdir -p /opt/airpods-docker/rootfs_debootstrap/dev/pts
+sudo mkdir -p /opt/airpods-docker/rootfs_debootstrap/proc
+sudo mkdir -p /opt/airpods-docker/rootfs_debootstrap/sys
 
-sudo chroot /opt/rootfs_debootstrap /bin/bash
+sudo mount --bind /dev /opt/airpods-docker/rootfs_debootstrap/dev
+sudo mount --bind /dev/pts /opt/airpods-docker/rootfs_debootstrap/dev/pts
+sudo mount --bind /proc /opt/airpods-docker/rootfs_debootstrap/proc
+sudo mount --bind /sys /opt/airpods-docker/rootfs_debootstrap/sys
+
+sudo chroot /opt/airpods-docker/rootfs_debootstrap /bin/bash
 
 mkdir -p /etc/apt/apt.conf.d
 
@@ -63,14 +68,14 @@ rm -rf /tmp/*,*
 
 exit
 
-sudo umount -l /opt/rootfs_debootstrap/proc
-sudo umount -l /opt/rootfs_debootstrap/sys
-sudo umount -l /opt/rootfs_debootstrap/dev
-sudo umount -l /opt/rootfs_debootstrap/run
+sudo umount /opt/airpods-docker/rootfs_debootstrap/sys
+sudo umount /opt/airpods-docker/rootfs_debootstrap/proc
+sudo umount /opt/airpods-docker/rootfs_debootstrap/dev/pts
+sudo umount /opt/airpods-docker/rootfs_debootstrap/dev
 
-docker import rootfs_debootstrap.tar rootfs_debootstrap:1.2.1
+docker import rootfs_debootstrap.tar airysdark/rootfs_debootstrap:1.2.2
 
-docker push rootfs_debootstrap:1.2.1
+docker push airysdark/rootfs_debootstrap:1.2.2
 
 docker build -t airpods-debug .
 
@@ -90,6 +95,6 @@ tar --numeric-owner -cpf rootfs_debootstrap.tar \
   --exclude=var/spool/rsyslog \
   --exclude=var/log/btmp \
   --exclude=var/log/private \
-  -C /opt/rootfs_debootstrap .
+  -C /opt/airpods-docker/rootfs_debootstrap .
 
 
