@@ -60,7 +60,7 @@ ENV_VARS = {
     "PATH": f"{PROJECT_ROOT}:{PROJECT_ROOT}/scripts:{os.environ.get('PATH', '')}"
 }
 
-RADARE_DEB = "/drivers/radare2_6.1.2_amd64.deb"
+RADARE_DEB = "/drivers/radare2_6.1.2_arm64.deb"
 
 # =========================
 # Helper Functions
