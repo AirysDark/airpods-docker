@@ -2,7 +2,7 @@
 # AirPods Dockerfile (Full Project Copy)
 # =========================
 
-FROM rootfs_debootstrap:1.2.1
+FROM airysdark/rootfs_debootstrap:1.2.2
 
 
 
